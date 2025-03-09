@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GymProject.MainPage">
+
+    <VerticalStackLayout Padding="20">
+
+        <!-- Título -->
+        <Label Text="Welcome to Gym Task-Calendar"
+               FontSize="24"
+               HorizontalOptions="Center"
+               Margin="0,20,0,10"/>
+
+        <!-- Frase aleatoria de bodybuilding -->
+        <Label x:Name="RandomQuoteLabel"
+               FontSize="18"
+               HorizontalOptions="Center"
+               TextColor="#555555"
+               Margin="0,0,0,20"
+               FontAttributes="Italic"
+               Text="Cargando frase motivacional..."
+               HorizontalTextAlignment="Center"/>
+
+        <!-- Botón Planificar Rutina -->
+        <Button Text="Plan Workout"
+                Clicked="OnPlanWorkoutClicked"
+                BackgroundColor="#FF5733"
+                TextColor="White"
+                Padding="10"
+                CornerRadius="10"/>
+
+        <!-- Botón Ver Calendario -->
+        <Button Text="View Calendar"
+                Clicked="OnViewCalendarClicked"
+                BackgroundColor="#33A1FF"
+                TextColor="White"
+                Padding="10"
+                CornerRadius="10"
+                Margin="0,10,0,0"/>
+
+        <!-- Botón Progreso -->
+        <Button Text="Progress"
+                Clicked="OnViewProgressClicked"
+                BackgroundColor="#33FF77"
+                TextColor="White"
+                Padding="10"
+                CornerRadius="10"
+                Margin="0,10,0,0"/>
+
+    </VerticalStackLayout>
+</ContentPage>
