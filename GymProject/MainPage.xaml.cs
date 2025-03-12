@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GymProject.Views;
 using Microsoft.Maui.Controls;
 
 namespace GymProject
@@ -21,6 +22,7 @@ namespace GymProject
             ShowRandomQuote();
         }
 
+        // ✅ Muestra una cita aleatoria
         private void ShowRandomQuote()
         {
             Random random = new Random();
@@ -28,23 +30,32 @@ namespace GymProject
             RandomQuoteLabel.Text = bodybuildingQuotes[index];
         }
 
-        private async void OnPlanWorkoutClicked(object sender, EventArgs e)
+        // ✅ Navegar a la página para agregar ejercicios
+        private async void OnAddExerciseClicked(object sender, EventArgs e)
         {
-            // Navegar a WorkoutPlannerPage
-            await Navigation.PushAsync(new GymProject.Views.WorkoutPlannerPage());
+            string workoutName = "New Custom Workout";
+            DateTime workoutDateTime = DateTime.Now;
+            await Navigation.PushAsync(new WorkoutPlannerPage(workoutName, workoutDateTime));
+        }
+
+        private async void OnViewProfileClicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Profile", "This is your profile page.", "OK");
         }
 
         private async void OnViewCalendarClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new GymProject.Views.CalendarPage());
+            await DisplayAlert("Calendar", "Here is your calendar.", "OK");
         }
 
+        private async void OnViewHomeClicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Home", "You are already on Home.", "OK");
+        }
 
         private async void OnViewProgressClicked(object sender, EventArgs e)
         {
-          
-            await Navigation.PushAsync(new GymProject.Views.ProgressPage());
+            await DisplayAlert("Progress", "This is your progress page.", "OK");
         }
-
     }
 }

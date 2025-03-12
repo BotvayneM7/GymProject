@@ -2,30 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GymProject.Views.ProgressPage"
-             Title="ProgressPage">
-    
-    <VerticalStackLayout Padding="20">
-            <Label Text="User Progress"
-               FontSize="24"
-               HorizontalOptions="Center"/>
+             Title="Progress">
 
-            <Label Text="Recent Workout History"
-               FontAttributes="Bold"
-               Margin="0,10,0,5"/>
-
-            <ListView>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Date}" Detail="{Binding Details}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Text="View Statistics"
-                BackgroundColor="#33A1FF"
-                TextColor="White"
-                Padding="10"
-                CornerRadius="10"
-                Margin="0,10,0,0"/>
-        </VerticalStackLayout>
-    </ContentPage>
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Workout Progress" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <!-- Aquí puedes agregar gráficos o estadísticas de progreso -->
+    </StackLayout>
+</ContentPage>

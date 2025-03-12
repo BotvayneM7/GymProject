@@ -6,115 +6,119 @@ namespace GymProject.Views
 {
     public partial class WorkoutPlannerPage : ContentPage
     {
-        // ObservableCollection to bind to the ListView
         public ObservableCollection<Exercise> ExercisesList { get; set; }
         private int TotalGymTime { get; set; }
+        public DateTime WorkoutDateTime { get; set; }
 
-        public WorkoutPlannerPage()
+        public WorkoutPlannerPage(string workoutName, DateTime workoutDateTime)
         {
             InitializeComponent();
+            WorkoutDateTime = workoutDateTime;
             ExercisesList = new ObservableCollection<Exercise>();
-            BindingContext = this; // Set the BindingContext to the current page
+            ExercisesListView.ItemsSource = ExercisesList;
+            BindingContext = this;
         }
 
-        // This is the handler for the "Add Exercise" button click
         private void OnAddExerciseClicked(object sender, EventArgs e)
         {
-            // Get user input values
-            string workoutName = WorkoutNameEntry.Text;
             string exercise = ExerciseEntry.Text;
-            string repsSets = RepsSetsEntry.Text;
+            string sets = SetsEntry.Text;
+            string reps = RepsEntry.Text;
             string restTime = RestTimeEntry.Text;
 
-            // Validate the inputs
-            if (string.IsNullOrEmpty(workoutName) || string.IsNullOrEmpty(exercise) || string.IsNullOrEmpty(repsSets) || string.IsNullOrEmpty(restTime))
+            if (string.IsNullOrEmpty(exercise) || string.IsNullOrEmpty(sets) ||
+                string.IsNullOrEmpty(reps) || string.IsNullOrEmpty(restTime))
             {
                 DisplayAlert("Invalid Input", "Please fill in all fields.", "OK");
                 return;
             }
 
-            // Validate and parse RestTime
-            int restTimeInMinutes = ParseRestTime(restTime);
-            if (restTimeInMinutes == -1)
+            int setsCount = ParseNumber(sets);
+            int repsCount = ParseNumber(reps);
+            int restTimeInMinutes = ParseNumber(restTime);
+
+            if (setsCount == -1 || repsCount == -1 || restTimeInMinutes == -1)
             {
-                DisplayAlert("Invalid Input", "Please enter a valid rest time (e.g., 3-4 or 3).", "OK");
+                DisplayAlert("Invalid Input", "Please enter valid numeric values.", "OK");
                 return;
             }
 
-            // Calculate the total time at the gym for this exercise
-            int totalTimeAtGym = CalculateTotalGymTime(repsSets, restTimeInMinutes);
+            int totalTimeAtGym = CalculateTotalGymTime(setsCount, restTimeInMinutes);
+            var newExercise = new Exercise(exercise, setsCount, repsCount, restTimeInMinutes, totalTimeAtGym);
 
-            // Create a new exercise object
-            var newExercise = new Exercise
-            {
-                ExerciseName = exercise,
-                RepsSets = repsSets,
-                RestTime = restTimeInMinutes,
-                TotalTimeAtGym = totalTimeAtGym
-            };
-
-            // Add the exercise to the list
-            ExercisesList.Add(newExercise);
-
-            // Update the total gym time
+            ExercisesList.Insert(0, newExercise);
             TotalGymTime += totalTimeAtGym;
             TotalTimeLabel.Text = $"Total Time: {TotalGymTime} mins";
 
-            // Clear the input fields
-            WorkoutNameEntry.Text = "";
+            ClearInputFields();
+        }
+
+        private void OnCreateWorkoutClicked(object sender, EventArgs e)
+        {
+            if (ExercisesList.Count == 0)
+            {
+                DisplayAlert("Empty Workout", "You haven't added any exercises yet.", "OK");
+                return;
+            }
+
+            // ? Aquí puedes enviar el workout a otra página, base de datos, etc.
+            DisplayAlert("Workout Created", $"You have successfully created your workout.\nTotal Time: {TotalGymTime} mins.", "OK");
+
+            // Limpia la lista después de crear el workout
+            ExercisesList.Clear();
+            TotalGymTime = 0;
+            TotalTimeLabel.Text = "Total Time: 0 mins";
+        }
+
+        private void ClearInputFields()
+        {
             ExerciseEntry.Text = "";
-            RepsSetsEntry.Text = "";
+            SetsEntry.Text = "";
+            RepsEntry.Text = "";
             RestTimeEntry.Text = "";
         }
 
-        // Helper function to validate and parse rest time (could be a range or a single integer)
-        private int ParseRestTime(string restTime)
+        private int ParseNumber(string input)
         {
-            // Check if it is a valid single integer
-            if (int.TryParse(restTime, out int result))
+            if (int.TryParse(input, out int result))
+                return result;
+
+            var parts = input.Split('-');
+            if (parts.Length == 2 &&
+                int.TryParse(parts[0], out int minValue) &&
+                int.TryParse(parts[1], out int maxValue))
             {
-                return result; // Return single integer
+                return (minValue + maxValue) / 2;
             }
-            else
-            {
-                // Check if it is a valid range (e.g., 3-4)
-                var parts = restTime.Split('-');
-                if (parts.Length == 2 &&
-                    int.TryParse(parts[0], out int minTime) &&
-                    int.TryParse(parts[1], out int maxTime) &&
-                    minTime <= maxTime)
-                {
-                    // Return the average of the range
-                    return (minTime + maxTime) / 2;
-                }
-            }
-            return -1; // Invalid rest time format
+
+            return -1;
         }
 
-        // Helper function to calculate total gym time (exercise time + rest time)
-        private int CalculateTotalGymTime(string repsSets, int restTimeInMinutes)
+        private int CalculateTotalGymTime(int sets, int restTime)
         {
-            // Assuming each set takes 1 minute (you can adjust this logic)
-            string[] repsSetsArray = repsSets.Split('x');
-            if (repsSetsArray.Length == 2 &&
-                int.TryParse(repsSetsArray[0], out int sets) &&
-                int.TryParse(repsSetsArray[1], out int reps))
-            {
-                // Total time = (sets * 1 minute for each set) + (rest time between sets)
-                int exerciseTime = sets * 1; // Assuming 1 minute per set
-                int totalRestTime = (sets - 1) * restTimeInMinutes; // Rest time between sets (no rest after last set)
-                return exerciseTime + totalRestTime;
-            }
-            return 0; // Return 0 if reps/sets format is invalid
+            int exerciseTime = sets * 1;
+            int totalRestTime = (sets - 1) * restTime;
+            return exerciseTime + totalRestTime;
         }
     }
 
-    // Model class to represent an exercise
     public class Exercise
     {
         public string ExerciseName { get; set; }
-        public string RepsSets { get; set; }
+        public int Sets { get; set; }
+        public int Reps { get; set; }
         public int RestTime { get; set; }
         public int TotalTimeAtGym { get; set; }
+
+        public Exercise(string exerciseName, int sets, int reps, int restTime, int totalTimeAtGym)
+        {
+            ExerciseName = exerciseName;
+            Sets = sets;
+            Reps = reps;
+            RestTime = restTime;
+            TotalTimeAtGym = totalTimeAtGym;
+        }
+
+        public string RepsSets => $"{Sets}x{Reps}";
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GymProject.Views.ProfilePage"
+             Title="Profile">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="User Profile" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <Label Text="Name: Eddie" FontSize="18"/>
+        <Label Text="Age: 25" FontSize="18"/>
+        <Label Text="Height: 180 cm" FontSize="18"/>
+        <Label Text="Weight: 80 kg" FontSize="18"/>
+    </StackLayout>
+</ContentPage>

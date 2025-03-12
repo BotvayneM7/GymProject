@@ -1,51 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GymProject.MainPage">
+             x:Class="GymProject.MainPage"
+             BackgroundImageSource="back.jpg"
+             Title="Home"
+             BackgroundColor="Black">
 
-    <VerticalStackLayout Padding="20">
+    <Grid RowDefinitions="*, Auto"
+         
+          Padding="20">
 
-        <!-- Título -->
-        <Label Text="Welcome to Gym Task-Calendar"
-               FontSize="24"
-               HorizontalOptions="Center"
-               Margin="0,20,0,10"/>
+        <!-- Contenido Principal -->
+        <VerticalStackLayout Grid.Row="0" Spacing="15">
 
-        <!-- Frase aleatoria de bodybuilding -->
-        <Label x:Name="RandomQuoteLabel"
-               FontSize="18"
-               HorizontalOptions="Center"
-               TextColor="#555555"
-               Margin="0,0,0,20"
-               FontAttributes="Italic"
-               Text="Cargando frase motivacional..."
-               HorizontalTextAlignment="Center"/>
+            <!-- Mensaje de Bienvenida -->
+            <Label Text="Welcome back, Eddie"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#a855f7"
+                   HorizontalOptions="Center"/>
 
-        <!-- Botón Planificar Rutina -->
-        <Button Text="Plan Workout"
-                Clicked="OnPlanWorkoutClicked"
-                BackgroundColor="#FF5733"
-                TextColor="White"
-                Padding="10"
-                CornerRadius="10"/>
+            <!-- Quote of the Day -->
+            <Label x:Name="RandomQuoteLabel"
+                   FontSize="14"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
 
-        <!-- Botón Ver Calendario -->
-        <Button Text="View Calendar"
-                Clicked="OnViewCalendarClicked"
-                BackgroundColor="#33A1FF"
-                TextColor="White"
-                Padding="10"
-                CornerRadius="10"
-                Margin="0,10,0,0"/>
+            <!-- Ejercicio Actual -->
+            <Label Text="Current Exercise"
+                   FontAttributes="Bold"
+                   TextColor="#a855f7"/>
+            <Label x:Name="CurrentExerciseLabel"
+                   Text="Squats"
+                   FontSize="18"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
 
-        <!-- Botón Progreso -->
-        <Button Text="Progress"
-                Clicked="OnViewProgressClicked"
-                BackgroundColor="#33FF77"
-                TextColor="White"
-                Padding="10"
-                CornerRadius="10"
-                Margin="0,10,0,0"/>
+            <!-- Siguiente Ejercicio -->
+            <Label Text="Next Exercise"
+                   FontAttributes="Bold"
+                   TextColor="#a855f7"/>
+            <Label x:Name="NextExerciseLabel"
+                   Text="Leg extension"
+                   FontSize="18"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
 
-    </VerticalStackLayout>
+            <!-- Botón para Agregar Ejercicios -->
+            <Button Text="Add exercises ➕"
+                    Clicked="OnAddExerciseClicked"
+                    BackgroundColor="Black"
+                    Padding="17"
+                    TextColor="White"
+                    CornerRadius="30"
+                    Margin="0,20,0,20"/>
+        </VerticalStackLayout>
+
+        <!-- Barra de Navegación Inferior -->
+        <Frame Grid.Row="1"
+             
+               BorderColor="Transparent"
+               HasShadow="False"
+               Padding="-30"
+               VerticalOptions="Fill"
+               HorizontalOptions="FillAndExpand"
+               CornerRadius="0"
+               Margin="0">
+
+            <Grid ColumnDefinitions="*,*,*,*"
+                  Padding="10"
+                  HeightRequest="80"
+                  BackgroundColor="Black">
+
+                <Button Text="Profile"
+                        Clicked="OnViewProfileClicked"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Grid.Column="0"
+                        VerticalOptions="Center"/>
+
+                <Button Text="Calendar"
+                        Clicked="OnViewCalendarClicked"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Grid.Column="1"
+                        VerticalOptions="Center"/>
+
+                <Button Text="Home"
+                        Clicked="OnViewHomeClicked"
+                        TextColor="#a855f7"
+                        BackgroundColor="Transparent"
+                        Grid.Column="2"
+                        VerticalOptions="Center"/>
+
+                <Button Text="Progress"
+                        Clicked="OnViewProgressClicked"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Grid.Column="3"
+                        VerticalOptions="Center"/>
+            </Grid>
+        </Frame>
+
+    </Grid>
 </ContentPage>

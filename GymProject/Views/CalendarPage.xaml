@@ -2,30 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GymProject.Views.CalendarPage"
-             Title="CalendarPage">
-    
-    <VerticalStackLayout Padding="20">
-            <Label Text="Your Calendar"
-               FontSize="24"
-               HorizontalOptions="Center"/>
+             Title="Calendar">
 
-            <DatePicker/>
-
-            <ListView>
-                <ListView.Header>
-                    <Label Text="Scheduled Sessions" FontAttributes="Bold"/>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Date}" Detail="{Binding RoutineName}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Text="Add New Session"
-                BackgroundColor="#FF5733"
-                TextColor="White"
-                Padding="10"
-                CornerRadius="10"/>
-        </VerticalStackLayout>
-    </ContentPage>
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Workout Calendar" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <!-- Aquí puedes agregar un control de calendario o una lista de eventos -->
+    </StackLayout>
+</ContentPage>
